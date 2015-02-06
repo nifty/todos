@@ -19,7 +19,7 @@ type TodoList struct {
 }
 
 func (tl *TodoList) addItem(text string) {
-	todo := &Todo{text: text, completed: false}
+	todo := &Todo{text, false}
 
 	if tl.items == nil {
 		tl.idIncrement = 0
