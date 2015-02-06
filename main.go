@@ -2,26 +2,49 @@ package main
 
 import "fmt"
 
-var todos = make(map[int]string)
-var id = 0
+// Todo .
+type Todo struct {
+	text      string
+	completed bool
+}
+
+func (todo *Todo) complete() {
+	todo.completed = true
+}
+
+// TodoList .
+type TodoList struct {
+	idIncrement int
+	items       map[int]*Todo
+}
+
+func (tl *TodoList) addItem(text string) {
+	todo := &Todo{text: text, completed: false}
+
+	if tl.items == nil {
+		tl.idIncrement = 0
+		tl.items = make(map[int]*Todo)
+	}
+
+	tl.idIncrement++
+	tl.items[tl.idIncrement] = todo
+}
+
+func (tl *TodoList) getItem(id int) *Todo {
+	todo := tl.items[id]
+
+	return todo
+}
 
 func main() {
-	addItem("Make coffee")
-	addItem("Drink coffee")
+	todoList := TodoList{}
+	todoList.addItem("Make coffee")
+	todoList.addItem("Drink coffee")
 
-	fmt.Println(todos)
+	todoList.getItem(1).complete()
+	todoList.getItem(2).complete()
 
-	removeItem(1)
-	addItem("Clean cup")
-
-	fmt.Println(todos)
-}
-
-func addItem(item string) {
-	id += 1
-	todos[id] = item
-}
-
-func removeItem(id int) {
-	delete(todos, id)
+	for _, todo := range todoList.items {
+		fmt.Println(todo)
+	}
 }
