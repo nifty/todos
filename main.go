@@ -22,7 +22,6 @@ func (tl *TodoList) addItem(text string) {
 	todo := &Todo{text, false}
 
 	if tl.items == nil {
-		tl.idIncrement = 0
 		tl.items = make(map[int]*Todo)
 	}
 
